@@ -1,4 +1,5 @@
-# edgio-api-examples
+# Edgio API Examples
+
 JavaScript examples for calling the Edgio APIs
 
 # Requirements
@@ -13,7 +14,7 @@ JavaScript examples for calling the Edgio APIs
 npm i
 ```
 
-2. Copy `.env.example` to `.env`. Fill in your API key and the tenant ID of an environment to operate on. 
+2. Copy `.env.example` to `.env`. Fill in your API key and the tenant ID of an environment to operate on.
 
 # Running Examples
 
