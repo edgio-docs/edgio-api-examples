@@ -16,7 +16,7 @@ export function wait(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-// Node >=16 has a built-in readline promise API, this is just convenient 
+// Node >=17 has a built-in readline promise API, this is just convenient 
 // to have this run in lower versions
 export async function readlinePromise(message) {
   const rl = readline.createInterface({
