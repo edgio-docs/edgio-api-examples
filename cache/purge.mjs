@@ -1,5 +1,7 @@
 import "dotenv/config";
 import { API_URL_BASE } from "../constants.mjs";
+import { authorizationHeaders, wait } from "../common.mjs";
+
 import fetch from "node-fetch";
 
 async function purgeExample() {
@@ -11,40 +13,38 @@ async function purgeExample() {
   while (status.status !== "done") {
     wait(1000);
     status = await getPurgeStatus(purgeId);
-    console.log(`Purge status: ${status.status}, progress: ${status.progress}`);
+    console.log(`Purge status: ${status.status}, progress: ${status.progress_percentage}`);
   }
 }
 
 async function sendPurgeRequest() {
-  const url = `${API_URL_BASE}/app/purge/v1/request`;
-
+  const url = `${API_URL_BASE}/cache/v0.1/purge-requests`;
+  
   const res = await fetch(url, {
     method: "POST",
     headers: {
-      "X-Api-Key": process.env.API_KEY,
+      ...authorizationHeaders,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
       purge_type: "all_entries",
-      tenant_id: process.env.ENVIRONMENT_TENANT_ID,
+      environment_id: process.env.ENVIRONMENT_ID,
     }),
   });
 
   if (res.ok) {
-    const { purge_id } = await res.json();
-    return purge_id;
+    const { id } = await res.json();
+    return id;
   } else {
     throw new Error(`error ${res.status} ${await res.text()}`);
   }
 }
 
 async function getPurgeStatus(id) {
-  const url = `${API_URL_BASE}/app/purge/v1/request/${id}`;
+  const url = `${API_URL_BASE}/cache/v0.1/purge-requests/${id}`;
 
   const res = await fetch(url, {
-    headers: {
-      "X-Api-Key": process.env.API_KEY,
-    },
+    headers: authorizationHeaders,
   });
 
   if (res.ok) {
@@ -52,10 +52,6 @@ async function getPurgeStatus(id) {
   } else {
     throw new Error(`error ${res.status} ${await res.text()}`);
   }
-}
-
-function wait(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 purgeExample();

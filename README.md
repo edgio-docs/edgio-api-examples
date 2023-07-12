@@ -8,16 +8,24 @@ JavaScript examples for calling the Edgio APIs
 
 # Setup
 
-1. Install dependencies:
+- Install dependencies:
 
 ```
 npm i
 ```
 
-2. Copy `.env.example` to `.env`. Fill in your API key and the tenant ID of an environment to operate on.
+- Copy `.env.example` to `.env`. and fill in:
+  - the environment tenand id to operate on: `ENVIRONMENT_ID`
+  - an authentication key, `API_KEY` or `JWT_ACCESS_KEY`
+  - for `/config/tls-cert.mjs`: `PRIMARY_CERT`, `INTERMEDIATE_CERT` and `PRIVATE_KEY`
+  - for `/accounts/creation.mjs`: (required for JWT_ACCESS_KEY authentication) the `ORGANIZATION_ID` on which to create properties and environments. It creates a new organization otherwise.
+  - for `/configs/*`: the `ENVIRONMENT_ID` on which to operate.
 
 # Running Examples
 
 ```
-node config/update.mjs
+node accounts/creation.mjs
+node cache/purge.mjs
+node config/configs.mjs
+node config/tls-certs.mjs
 ```
