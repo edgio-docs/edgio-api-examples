@@ -24,8 +24,8 @@ npm i
 # Running Examples
 
 ```
-node accounts/creation.mjs
-node cache/purge.mjs
-node config/configs.mjs
-node config/tls-certs.mjs
+node accounts/creation.js
+node cache/purge.js
+node config/configs.js
+node config/tls-certs.js
 ```
